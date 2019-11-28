@@ -1,3 +1,5 @@
+-- Big Query
+
 with patents as (
 SELECT publication_number, title, abstract, url, country, publication_description
   from `patents-public-data.google_patents_research.publications`

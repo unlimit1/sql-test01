@@ -6,6 +6,7 @@ select * from ohdsi_cdm.person limit 10;
 
 select * from ohdsi_cdm.location limit 100;
 
+
 select person_id, year_of_birth, month_of_birth, day_of_birth
       ,gender_concept_id, gender_source_concept_id, gender_source_value, c1.concept_name gender_name
       ,race_concept_id, race_source_concept_id, race_source_value, c2.concept_name race_name
