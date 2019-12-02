@@ -1,0 +1,71 @@
+select count(1) from pubchem_ana.pubchem_compound;
+
+select * from pubchem_ana.pubchem_compound;
+
+select * from hgnc_ana.pq_hgnc_gene where lower(symbol) = 'kcnh2';  --entrez_id 3757
+
+select source_name, count(distinct ta.aid) assay_cnt, count(1) act_cnt
+  from pubchem_ana.pubchem_data_aid_target ta 
+       inner join pubchem_ana.pubchem_description de on ta.aid = de.aid
+       inner join (select distinct aid, tag_no from pubchem_ana.pubchem_data) da on de.aid = da.aid
+ where geneid = 3757
+ group by source_name
+ order by act_cnt desc
+;
+
+/* source_name	assay_cnt	act_cnt
+NCGC	8	924,893
+Johns Hopkins Ion Channel Center	15	311,398
+10589	1	115,372
+1154	3	36,952
+The Genomics Institute of the Novartis Research Foundation (GNF)	1	33,364
+15471	27	21,438
+ICCB-Longwood/NSRB Screening Facility, Harvard Medical School	1	21,019
+11962	1	18,113
+ChEMBL	2,409	17,639
+PDSP	1	1,960
+... total 16rows 
+ */
+
+select source_name, count(distinct ta.aid) assay_cnt, count(distinct da.aid*1000000+da.tag_no) act_cnt
+      --,sum(case when lower(field_name) = 'ic50' then 1 else 0 end) ic50_cnt
+  from pubchem_ana.pubchem_data_aid_target ta 
+       inner join pubchem_ana.pubchem_description de on ta.aid = de.aid
+       inner join (select aid,tag_no from pubchem_ana.pubchem_data) da on de.aid = da.aid
+ where geneid = 3757
+ group by source_name
+ order by act_cnt desc
+;
+
+
+select * from pubchem_ana.pubchem_description where aid = 1010;
+
+
+select de.*
+  from pubchem_ana.pubchem_data_aid_target ta 
+       inner join pubchem_ana.pubchem_description de on ta.aid = de.aid
+ where geneid = 3757
+   and de.source_name in ('NCGC','Johns Hopkins Ion Channel Center','10589','1154',
+                          'The Genomics Institute of the Novartis Research Foundation (GNF)','15471')
+ order by source_name, aid
+;
+
+/* NCGC 8건 assay
+
+
+*/
+
+select -- count(distinct cast(aid as varchar)||cast(tag_no as varchar) ) -- 5381
+       *
+  from pubchem_ana.pubchem_data
+ where aid = 588834
+ order by 1,2,4
+;
+
+select * from pubchem_ana.pubchem_data
+ where aid = 588834
+ order by 1,2,4
+;
+
+
+select count(1) from 
