@@ -11,6 +11,7 @@ select p.*, sc.*
  order by sc.publication_date desc, sc.patent_id
 ;
 
+
 create table ohdsi_cdm_522.aaa ( col1 varchar );
 
 
@@ -38,3 +39,31 @@ select count(1) -- 634372 -- p.*, sc.*
        inner join patents p on sc.patent_id = p.publication_number
  --order by sc.publication_date desc, sc.patent_id
 ;
+
+
+-- 구글 patens 테이블 탐색
+-- 다중 중첩 구조로 되어 있어 어렵군... 
+SELECT * from `patents-public-data.google_patents_research.publications` where publication_number like 'US%' LIMIT 100;
+SELECT * from `patents-public-data.google_patents_research.publications` where publication_number like 'JP%' LIMIT 100;
+{"v":
+	[ {"v":
+	    {"f":
+	    	[ {"v":"G01N2800/56"}
+	    	 ,{"v":"false"}
+	    	 ,{"v":"false"}
+	    	 ,{"v":[{"v":"G01N2800/56"},{"v":"G01N2800/00"},{"v":"G01N"},{"v":"G01"},{"v":"G"}]}
+	        ]
+	    }
+	  }
+	 ,{"v":{"f":[{"v":"G01N2800/325"},{"v":"false"},{"v":"false"},{"v":[{"v":"G01N2800/325"},{"v":"G01N2800/32"},{"v":"G01N2800/00"},{"v":"G01N"},{"v":"G01"},{"v":"G"}]}]}}
+	 ,{"v":{"f":[{"v":"G01N33/6893"},{"v":"true"},{"v":"false"},{"v":[{"v":"G01N33/6893"},{"v":"G01N33/68"},{"v":"G01N33/50"},{"v":"G01N33/48"},{"v":"G01N33/00"},{"v":"G01N"},{"v":"G01"},{"v":"G"}]}]}}
+	 ,{"v":{"f":[{"v":"G01N2333/4703"},{"v":"false"},{"v":"false"},{"v":[{"v":"G01N2333/4703"},{"v":"G01N2333/4701"},{"v":"G01N2333/47"},{"v":"G01N2333/46"},{"v":"G01N2333/435"},{"v":"G01N2333/00"},{"v":"G01N"},{"v":"G01"},{"v":"G"}]}]}}
+	 ,{"v":{"f":[{"v":"C12Q1/6883"},{"v":"true"},{"v":"true"},{"v":[{"v":"C12Q1/6883"},{"v":"C12Q1/6876"},{"v":"C12Q1/68"},{"v":"C12Q1/00"},{"v":"C12Q"},{"v":"C12"},{"v":"C"}]}]}}
+	 ,{"v":{"f":[{"v":"C07K14/4747"},{"v":"true"},{"v":"false"},{"v":[{"v":"C07K14/4747"},{"v":"C07K14/4701"},{"v":"C07K14/47"},{"v":"C07K14/46"},{"v":"C07K14/435"},{"v":"C07K14/00"},{"v":"C07K"},{"v":"C07"},{"v":"C"}]}]}},{"v":{"f":[{"v":"C07K14/4716"},{"v":"true"},{"v":"false"},{"v":[{"v":"C07K14/4716"},{"v":"C07K14/4701"},{"v":"C07K14/47"},{"v":"C07K14/46"},{"v":"C07K14/435"},{"v":"C07K14/00"},{"v":"C07K"},{"v":"C07"},{"v":"C"}]}]}}
+	]
+}
+{"v":[{"v":"bin1"},{"v":"method"},{"v":"heart"},{"v":"patient"},{"v":"idf"},{"v":"cardiac"},{"v":"patients"},{"v":"expression levels"},{"v":"expression"},{"v":"risk"}]}
+{"v":[{"v":{"f":[{"v":"EP-3255432-B1"},{"v":""},{"v":""},{"v":""},{"v":""},{"v":"0"}]}},{"v":{"f":[{"v":"EP-2021799-B1"},{"v":""},{"v":""},{"v":""},{"v":""},{"v":"0"}]}}]}
+
+SELECT count(1), count(distinct publication_number) -- 119,041,383	119,041,358 (9초)
+from `patents-public-data.google_patents_research.publications`; 
