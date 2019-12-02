@@ -1,3 +1,5 @@
+-- athena
+
 select * from ana_chembl_ks.tsv_bioactivity act;
 select * from ana_chembl_ks.tsv_compound;
 select * from ana_chembl_ks.tsv_sequence;
