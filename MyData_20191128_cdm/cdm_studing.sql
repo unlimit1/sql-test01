@@ -195,3 +195,26 @@ select visit_type_concept_id, count(1) cnt from visit_occurrence vo group by vis
 select * from concept c where concept_id in (44818517);
 select * from concept c where vocabulary_id = 'Visit Type'; -- 그리 안중요..
 
+-- ----------------------------
+-- observation 
+select count(1) from observation o; -- 1876834
+select * from observation;
+select * from observation where person_id = 2 order by observation_date desc;
+select c1.concept_name observation, c2.concept_name observation_type, c3.concept_name observation_source
+      ,o.* 
+  from observation o
+       inner join concept c1 on o.observation_concept_id = c1.concept_id
+       inner join concept c2 on o.observation_type_concept_id = c2.concept_id
+       inner join concept c3 on o.observation_source_concept_id = c3.concept_id
+where person_id = 2 order by observation_date desc;
+
+-- ----------------------------
+-- observation_period
+
+select count(1) from observation_period o; -- 104891
+select * from observation_period;
+select period_type_concept_id, count(1) cnt from observation_period group by period_type_concept_id; -- 전부 44814722 
+select * from concept c where concept_id in (44814722); -- period_type_concept_id = 44814722 : Period while enrolled in insurance (= 보험 가입 기간) 
+select * from concept c where domain_id = 'Type Concept';
+select * from concept c where concept_class_id = 'Obs Period Type';
+
