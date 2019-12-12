@@ -37,6 +37,11 @@ select publication_date, patent_id, field, corpus_frequency, field_frequency
   from `patents-public-data.ebi_surechembl.map` 
  where schembl_id = 'SCHEMBL18945'
  order by publication_date desc, patent_id desc, field desc;
+
+select * from `patents-public-data.ebi_surechembl.map` 
+ where patent_id = 'US-20180086841-A1'
+ order by cast(corpus_frequency as int64) desc;
+
  
 
 -- SureChEMBL readme 
