@@ -1,5 +1,20 @@
 -- mariadb (columnstore)
 
+-- 테이블 목록
+select * from information_schema.TABLES t 
+ where TABLE_SCHEMA = 'ohdsi_cdm'
+order by table_name;
+
+select concat('select ''',table_name,''' t_nm, count(1) cnt from ',table_name,' union all')
+ from information_schema.TABLES t 
+ where TABLE_SCHEMA = 'ohdsi_cdm'
+order by table_name;
+
+-- --
+
+
+select 'aa' t_nm, count(1) cnt from care_site;
+
 select * from ohdsi_cdm.concept where concept_name like '%male%';
 
 select * from ohdsi_cdm.person limit 10;
@@ -87,6 +102,15 @@ select ancestor_concept_id, c1.concept_name, descendant_concept_id, c2.concept_n
        inner join concept c2 on ca.descendant_concept_id = c2.concept_id
  where ancestor_concept_id = 38003585 -- Asian 
  order by descendant_concept_id;
+
+
+select * from vocabulary v;
+select * from concept c where concept_name like '%visit%';
+select * from concept c where domain_id like '%visit%';
+select * from concept c where vocabulary_id like '%visit%';
+select * from visit_occurrence vo;
+
+select * 
 
 
 -- ------------------------------------------------
@@ -218,3 +242,19 @@ select * from concept c where concept_id in (44814722); -- period_type_concept_i
 select * from concept c where domain_id = 'Type Concept';
 select * from concept c where concept_class_id = 'Obs Period Type';
 
+-- ----------------------------
+-- procedure_occurrence
+
+select count(1) from procedure_occurrence; -- 13926771
+select * from procedure_occurrence;
+select period_type_concept_id, count(1) cnt from observation_period group by period_type_concept_id; -- 전부 44814722 
+select * from concept c where concept_id in (44814722); -- period_type_concept_id = 44814722 : Period while enrolled in insurance (= 보험 가입 기간) 
+select * from concept c where domain_id = 'Type Concept';
+select * from concept c where concept_class_id = 'Obs Period Type';
+
+select * from concept c where concept_id =  2001198;
+select * from concept c where domain_id like '%procedure%' -- 303752건... 많다. 
+
+
+
+select * from drug_cost vc;
