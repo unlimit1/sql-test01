@@ -9,9 +9,26 @@ select concat('select ''',table_name,''' t_nm, count(1) cnt from ',table_name,' 
  from information_schema.TABLES t 
  where TABLE_SCHEMA = 'ohdsi_cdm'
 order by table_name;
-
 -- --
 
+-- -------------------------------------------------
+-- 테이블 목록 ohdsi_cdm53_synthea
+select * from information_schema.TABLES t 
+ where TABLE_SCHEMA = 'ohdsi_cdm53_synthea'
+order by table_name;
+
+select concat('select ''',table_name,''' t_nm, count(1) cnt from ',table_name,' union all')
+ from information_schema.TABLES t 
+ where TABLE_SCHEMA = 'ohdsi_cdm'
+order by table_name;
+
+select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, ORDINAL_POSITION ODR
+      ,case when IS_NULLABLE = 'YES' then 'No' when IS_NULLABLE = 'NO' then 'Yes' else '검토필' end REQUIERD
+      ,upper(COLUMN_TYPE) DATA_TYPE
+  from information_schema.COLUMNS t 
+ where TABLE_SCHEMA = 'ohdsi_cdm53_synthea'
+order by table_name, ORDINAL_POSITION;
+-- --
 
 select 'aa' t_nm, count(1) cnt from care_site;
 
@@ -72,7 +89,7 @@ select * from ohdsi_cdm.vocabulary;
 select * from ohdsi_cdm.concept where concept_id = 44819232;
 select * from ohdsi_cdm.concept where vocabulary_id = 'Vocabulary';
 
-select     domain_id, vocabulary_id, concept_class_id, standard_concept, count(1) cnt from ohdsi_cdm.concept 
+select     domain_id, vocabulary_id, concept_class_id, standard_concept, count(10) cnt from ohdsi_cdm.concept 
  group by  domain_id, vocabulary_id, concept_class_id, standard_concept  order by 1,2,3;
 
 select * from concept_ancestor ca order by 1,2;
@@ -258,3 +275,5 @@ select * from concept c where domain_id like '%procedure%' -- 303752건... 많�
 
 
 select * from drug_cost vc;
+
+select count(1) from person;
